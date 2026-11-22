@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Walk through Forum Hotel Penang with real photos: entrance, reception, lobby and all five room types.">
+<title>Photo Walk-through | Forum Hotel Penang</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --bronze:#7a5a32; --gold:#c49a5c; --gold-light:#e0c08d; --black:#12100e; --ivory:#f7f2ea; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--ivory); color:var(--black); font-family:Jost,'Noto Sans SC',sans-serif; }
+  header { background:var(--black); color:#fff; padding:14px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  header b { font-family:'Cormorant Garamond',serif; font-size:22px; letter-spacing:.06em; font-weight:600; }
+  header .home { color:#fff; text-decoration:none; display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  header .home span { font-size:13px; color:#e0c08d; }
+  .cta { display:inline-block; margin-top:14px; background:#7a5a32; color:#fff; text-decoration:none; padding:13px 26px; font-size:14px; letter-spacing:.08em; text-transform:uppercase; }
+  header .draft { background:var(--gold); color:var(--black); font-size:11px; letter-spacing:.12em; padding:3px 8px; border-radius:3px; margin-left:8px; vertical-align:middle; }
+  .langs button { background:none; border:1px solid #6b5a43; color:#e9dcc7; padding:5px 10px; font:inherit; font-size:13px; cursor:pointer; border-radius:3px; }
+  .langs button.on { background:var(--gold); border-color:var(--gold); color:var(--black); }
+  main { max-width:1100px; margin:0 auto; padding:22px 16px 40px; }
+  h1 { font-family:'Cormorant Garamond','Noto Serif SC',serif; font-weight:600; font-size:34px; margin:0 0 4px; }
+  .sub { margin:0 0 16px; color:#5d5246; }
+  .tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+  .tabs button { border:1px solid var(--gold); background:#fff; color:var(--bronze); padding:9px 14px; font:inherit; font-size:14px; cursor:pointer; border-radius:3px; }
+  .tabs button.on { background:var(--bronze); border-color:var(--bronze); color:#fff; }
+
+  .stage { position:relative; height:min(72vh,660px); min-height:400px; background:#12100e; border-radius:6px; overflow:hidden; touch-action:none; cursor:grab; user-select:none; }
+  .stage.dragging { cursor:grabbing; }
+  .scene { position:absolute; inset:0; opacity:1; transition:opacity .7s ease; }
+  .scene.pre, .scene.out { opacity:0; }
+  .scene.out { pointer-events:none; }
+  .bg { position:absolute; inset:-40px; background-size:cover; background-position:center; filter:blur(26px) brightness(.55); }
+  .pano { position:absolute; transition:transform .8s cubic-bezier(.4,0,.2,1); will-change:transform; }
+  .pano img { display:block; width:100%; height:100%; pointer-events:none; -webkit-user-drag:none; }
+  .scene.pre .pano { transform:scale(1.2); }
+  .scene.out .pano { transform:scale(2.4); }
+
+  .hs { position:absolute; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; gap:6px; background:none; border:0; padding:0; cursor:pointer; font:inherit; }
+  .hs i { position:relative; width:46px; height:46px; border-radius:50%; background:rgba(18,16,14,.55); border:2px solid #fff; display:grid; place-items:center; transition:transform .2s, background .2s; }
+  .hs i::before { content:''; position:absolute; inset:-9px; border-radius:50%; border:2px solid rgba(255,255,255,.75); animation:pulse 1.9s ease-out infinite; }
+  .hs i svg { width:20px; height:20px; stroke:#fff; fill:none; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; }
+  .hs span { background:rgba(18,16,14,.8); color:#fff; font-size:13px; padding:4px 11px; border-radius:20px; white-space:nowrap; }
+  .hs:hover i, .hs:focus-visible i { transform:scale(1.12); background:var(--gold); }
+  .hs.turn i svg { transform:rotate(180deg); }
+  @keyframes pulse { from { transform:scale(.8); opacity:.9; } to { transform:scale(1.35); opacity:0; } }
+  @media (prefers-reduced-motion:reduce) { .hs i::before { animation:none; } .pano, .scene { transition-duration:.01s; } }
+
+  .where { position:absolute; left:12px; top:12px; background:rgba(18,16,14,.72); color:#fff; padding:8px 14px; border-radius:4px; pointer-events:none; z-index:5; }
+  .where small { display:block; color:var(--gold-light); font-size:11px; letter-spacing:.14em; text-transform:uppercase; }
+  .where strong { font-family:'Cormorant Garamond','Noto Serif SC',serif; font-size:22px; font-weight:600; }
+  .tolift { position:absolute; right:12px; top:12px; z-index:5; border:1px solid var(--gold); background:rgba(18,16,14,.72); color:var(--gold-light); padding:8px 14px; border-radius:20px; font:inherit; font-size:13px; cursor:pointer; }
+  .hint { position:absolute; left:50%; bottom:12px; transform:translateX(-50%); font-size:12px; color:#fff; background:rgba(18,16,14,.6); padding:4px 12px; border-radius:20px; pointer-events:none; z-index:5; white-space:nowrap; transition:opacity .6s; }
+  .hint.off { opacity:0; }
+  .choose { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:6; background:rgba(18,16,14,.86); border:1px solid var(--gold); border-radius:6px; padding:18px; width:min(92%,430px); text-align:center; }
+  .choose h2 { font-family:'Cormorant Garamond','Noto Serif SC',serif; color:var(--gold-light); font-weight:600; font-size:24px; margin:0 0 12px; }
+  .choose button { display:block; width:100%; margin-top:8px; padding:11px; border:1px solid #6b5a43; background:none; color:#fff; font:inherit; font-size:15px; cursor:pointer; border-radius:3px; }
+  .choose button:hover { background:var(--gold); border-color:var(--gold); color:var(--black); }
+
+  .thumbs { display:flex; gap:8px; margin-top:10px; overflow-x:auto; padding-bottom:4px; }
+  .thumbs button { flex:0 0 auto; width:118px; padding:0; border:2px solid transparent; background:#fff; border-radius:4px; overflow:hidden; cursor:pointer; font:inherit; font-size:12px; color:#5d5246; text-align:center; }
+  .thumbs button img { display:block; width:100%; height:74px; object-fit:cover; }
+  .thumbs button span { display:block; padding:4px 2px; }
+  .thumbs button.on { border-color:var(--bronze); color:var(--bronze); }
+  .note { font-size:13px; color:#6d6052; margin-top:14px; }
+</style>
+</head>
+<body>
+<header>
+  <a href="./" class="home" id="tHome"><b>FORUM HOTEL</b><span id="tBack"></span></a>
+  <div class="langs"><button data-l="en" class="on">EN</button> <button data-l="zh">中文</button> <button data-l="ms">BM</button></div>
+</header>
+<main>
+  <h1 id="tTitle"></h1>
+  <p class="sub" id="tSub"></p>
+  <div class="tabs" id="tabs"></div>
+  <div class="stage" id="stage">
+    <div class="where"><small id="wArea"></small><strong id="wView"></strong></div>
+    <button type="button" class="tolift" id="bLift" hidden></button>
+    <div class="hint" id="tHint"></div>
+  </div>
+  <div class="thumbs" id="thumbs"></div>
+  <p class="note" id="tNote"></p>
+  <a class="cta" id="tBook" href="./#booking"></a>
+</main>
+
+<script>
+const L10N = {
+  en: { title:'Walk through Forum Hotel', sub:'Real photos of our hotel. Tap the arrows to walk from the entrance to your room.',
+    hotel:'Hotel & lobby', sk:'Standard King', dk:'Deluxe King', dt:'Deluxe Twin', tr:'Deluxe Triple', fa:'Deluxe Family',
+    v_ext:'Hotel entrance', v_rec:'Reception', v_lounge:'Lobby lounge', v_lift:'Lift lobby', v_bed:'Bedroom', v_win:'Window side', v_door:'Door side',
+    v_bath:'Bathroom', v_ward:'Wardrobe', v_desk:'Work desk',
+    enter:'Enter the hotel', toLounge:'Lobby lounge', toLift:'Go to the lift', toOut:'Go outside', toRec:'Reception', toRooms:'Go up to the rooms',
+    toBath:'Bathroom', toDesk:'Work desk', toBed:'Back to the bed', toWin:'Turn to the window', toDoor:'Turn to the door', toWard:'Wardrobe', back:'Back to the room',
+    choose:'Choose your room', lift:'← Lift lobby', hint:'Tap an arrow to walk · drag to look around',
+    note:'Photos of our actual hotel and rooms. Rooms of the same type may differ slightly in layout.', backHome:'← Back to website', book:'Book now' },
+  zh: { title:'漫步 Forum Hotel', sub:'酒店实景照片。点击箭头，从大门一路走到您的房间。',
+    hotel:'酒店与大堂', sk:'标准大床房', dk:'豪华大床房', dt:'豪华双床房', tr:'豪华三人房', fa:'豪华家庭房',
+    v_ext:'酒店大门', v_rec:'前台', v_lounge:'大堂休息区', v_lift:'电梯间', v_bed:'卧室', v_win:'窗边', v_door:'门口方向',
+    v_bath:'浴室', v_ward:'衣柜', v_desk:'书桌',
+    enter:'进入酒店', toLounge:'大堂休息区', toLift:'前往电梯', toOut:'走出酒店', toRec:'前台', toRooms:'上楼去客房',
+    toBath:'浴室', toDesk:'书桌', toBed:'回到床边', toWin:'转向窗户', toDoor:'转向房门', toWard:'衣柜', back:'回到房间',
+    choose:'选择房型', lift:'← 电梯间', hint:'点击箭头前进 · 拖动环顾四周',
+    note:'酒店及客房实景照片。同一房型的客房布局可能略有不同。', backHome:'← 返回网站', book:'立即预订' },
+  ms: { title:'Jelajah Forum Hotel', sub:'Gambar sebenar hotel kami. Tekan anak panah untuk berjalan dari pintu masuk ke bilik anda.',
+    hotel:'Hotel & lobi', sk:'Standard King', dk:'Deluxe King', dt:'Deluxe Twin', tr:'Deluxe Triple', fa:'Deluxe Family',
+    v_ext:'Pintu masuk hotel', v_rec:'Kaunter penyambut', v_lounge:'Ruang rehat lobi', v_lift:'Lobi lif', v_bed:'Bilik tidur', v_win:'Sebelah tingkap', v_door:'Sebelah pintu',
+    v_bath:'Bilik mandi', v_ward:'Almari', v_desk:'Meja kerja',
+    enter:'Masuk ke hotel', toLounge:'Ruang rehat lobi', toLift:'Pergi ke lif', toOut:'Keluar', toRec:'Kaunter penyambut', toRooms:'Naik ke bilik',
+    toBath:'Bilik mandi', toDesk:'Meja kerja', toBed:'Kembali ke katil', toWin:'Pusing ke tingkap', toDoor:'Pusing ke pintu', toWard:'Almari', back:'Kembali ke bilik',
+    choose:'Pilih bilik anda', lift:'← Lobi lif', hint:'Tekan anak panah untuk berjalan · seret untuk melihat sekeliling',
+    note:'Gambar sebenar hotel dan bilik kami. Susun atur bilik daripada jenis yang sama mungkin berbeza sedikit.', backHome:'← Kembali ke laman web', book:'Tempah sekarang' }
+};
+// hs: [x%, y%, destination, label key, 'turn' when the place is behind the camera]
+const SCENES = {
+  ext:    { img:'exterior.jpg',        area:'hotel', v:'ext',    hs:[[50,86,'rec','enter']] },
+  rec:    { img:'reception-front.webp',area:'hotel', v:'rec',    hs:[[14,62,'lounge','toLounge'],[86,62,'lift','toLift'],[50,84,'ext','toOut','turn']] },
+  lounge: { img:'lobby-lounge.jpg',    area:'hotel', v:'lounge', hs:[[50,88,'rec','toRec','turn']] },
+  lift:   { img:'lift-lobby.webp',     area:'hotel', v:'lift',   hs:[[28,56,'choose','toRooms'],[50,84,'rec','toRec','turn']] },
+  sk1:  { img:'sk-1.jpg',        area:'sk', v:'bed',  hs:[[26,44,'sk3','toBath'],[9,60,'sk2','toDesk']] },
+  sk2:  { img:'sk-2.jpg',        area:'sk', v:'desk', hs:[[82,84,'sk1','toBed']] },
+  sk3:  { img:'sk-3.jpg',        area:'sk', v:'bath', hs:[[50,84,'sk1','back','turn']] },
+  dk1:  { img:'dk-main.webp',    area:'dk', v:'bed',  hs:[[66,45,'dk3','toBath'],[40,84,'dk2','toWin','turn']] },
+  dk2:  { img:'dk-view.webp',    area:'dk', v:'win',  hs:[[22,88,'dk1','toDoor','turn']] },
+  dk3:  { img:'dk-bath.webp',    area:'dk', v:'bath', hs:[[50,84,'dk1','back','turn']] },
+  dt1:  { img:'dt-room.webp',    area:'dt', v:'bed',  hs:[[50,84,'dt2','toDoor','turn']] },
+  dt2:  { img:'dt-3.jpg',        area:'dt', v:'door', hs:[[11,40,'dt3','toWard'],[32,47,'dt4','toBath'],[78,88,'dt1','toWin','turn']] },
+  dt3:  { img:'dt-wardrobe.webp',area:'dt', v:'ward', hs:[[50,84,'dt2','back','turn']] },
+  dt4:  { img:'dt-bath.webp',    area:'dt', v:'bath', hs:[[50,84,'dt2','back','turn']] },
+  tr1:  { img:'tr-1.jpg',        area:'tr', v:'bed',  hs:[[30,84,'tr2','toWard','turn'],[62,84,'tr3','toBath','turn']] },
+  tr2:  { img:'tr-2.jpg',        area:'tr', v:'ward', hs:[[50,84,'tr1','back','turn']] },
+  tr3:  { img:'tr-bath.webp',    area:'tr', v:'bath', hs:[[50,84,'tr1','back','turn']] },
+  fa1:  { img:'fa-1.jpg',        area:'fa', v:'bed',  hs:[[50,84,'fa2','toDoor','turn']] },
+  fa2:  { img:'fa-2.jpg',        area:'fa', v:'door', hs:[[71,44,'fa3','toBath'],[30,88,'fa1','toWin','turn']] },
+  fa3:  { img:'fa-3.jpg',        area:'fa', v:'bath', hs:[[50,84,'fa2','back','turn']] }
+};
+const AREAS = { hotel:'ext', sk:'sk1', dk:'dk1', dt:'dt1', tr:'tr1', fa:'fa1' };
+const ARROW = '<svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
+
+let lang = 'en', cur = 'ext', live = null, busy = false;
+try { lang = localStorage.getItem('forum-lang') || 'en'; } catch (e) {}
+if (!L10N[lang]) lang = 'en';
+const stage = document.getElementById('stage'), $ = id => document.getElementById(id);
+
+function layout(el) {                       // size the photo to fill the stage, a little larger so it can be dragged
+  const img = el.querySelector('img'); if (!img.naturalWidth) return;
+  const sw = stage.clientWidth, sh = stage.clientHeight, iw = img.naturalWidth, ih = img.naturalHeight;
+  const cover = Math.max(sw / iw, sh / ih), contain = Math.min(sw / iw, sh / ih);
+  const s = ih > iw * 1.1 ? Math.min(cover, contain * 1.3) : cover * 1.08;
+  const p = el.querySelector('.pano'); p._w = iw * s; p._h = ih * s;
+  p.style.width = p._w + 'px'; p.style.height = p._h + 'px';
+  if (p._x == null) { p._x = (sw - p._w) / 2; p._y = (sh - p._h) / 2; }
+  move(p, 0, 0);
+}
+function move(p, dx, dy) {
+  const sw = stage.clientWidth, sh = stage.clientHeight;
+  p._x = p._w > sw ? Math.min(0, Math.max(sw - p._w, p._x + dx)) : (sw - p._w) / 2;
+  p._y = p._h > sh ? Math.min(0, Math.max(sh - p._h, p._y + dy)) : (sh - p._h) / 2;
+  p.style.left = p._x + 'px'; p.style.top = p._y + 'px';
+}
+function makeScene(id) {
+  const sc = SCENES[id], t = L10N[lang], el = document.createElement('div');
+  el.className = 'scene pre';
+  el.innerHTML = '<div class="bg" style="background-image:url(images/' + sc.img + ')"></div><div class="pano"><img src="images/' + sc.img + '" alt="">' +
+    sc.hs.map(h => '<button type="button" class="hs' + (h[4] ? ' turn' : '') + '" data-to="' + h[2] + '" data-k="' + h[3] + '" style="left:' + h[0] + '%;top:' + h[1] + '%"><i>' + ARROW + '</i><span>' + t[h[3]] + '</span></button>').join('') + '</div>';
+  const img = el.querySelector('img');
+  if (img.complete) layout(el); else img.addEventListener('load', () => layout(el));
+  return el;
+}
+function go(id, from) {
+  if (busy || !SCENES[id]) return;
+  closeChoose();
+  const old = live, el = makeScene(id);
+  if (live) $('tHint').classList.add('off');
+  cur = id; live = el; busy = true;
+  stage.insertBefore(el, stage.firstChild);
+  layout(el);
+  if (old) {
+    if (from) old.querySelector('.pano').style.transformOrigin = from.style.left + ' ' + from.style.top;   // zoom towards the arrow
+    old.classList.add('out'); setTimeout(() => old.remove(), 850);
+  }
+  requestAnimationFrame(() => requestAnimationFrame(() => el.classList.remove('pre')));
+  setTimeout(() => busy = false, 500);
+  SCENES[id].hs.forEach(h => { if (SCENES[h[2]]) new Image().src = 'images/' + SCENES[h[2]].img; });         // load the next photos early
+  texts();
+}
+function openChoose() {
+  closeChoose();
+  const t = L10N[lang], d = document.createElement('div'); d.className = 'choose'; d.id = 'choose';
+  d.innerHTML = '<h2>' + t.choose + '</h2>' + ['sk', 'dk', 'dt', 'tr', 'fa'].map(k => '<button type="button" data-a="' + k + '">' + t[k] + '</button>').join('');
+  stage.appendChild(d);
+}
+function closeChoose() { const c = $('choose'); if (c) c.remove(); }
+
+// drag to look around; a drag must not count as a click on an arrow
+let drag = null, moved = 0;
+stage.addEventListener('pointerdown', e => { if (e.target.closest('.choose,.tolift')) return; drag = { x:e.clientX, y:e.clientY }; moved = 0; });
+window.addEventListener('pointermove', e => {
+  if (!drag || !live) return;
+  const dx = e.clientX - drag.x, dy = e.clientY - drag.y; moved += Math.abs(dx) + Math.abs(dy); drag = { x:e.clientX, y:e.clientY };
+  if (moved > 6) { $('tHint').classList.add('off'); stage.classList.add('dragging'); move(live.querySelector('.pano'), dx, dy); }
+});
+window.addEventListener('pointerup', () => { drag = null; stage.classList.remove('dragging'); });
+stage.addEventListener('click', e => {
+  const a = e.target.closest('[data-a]'); if (a) { go(AREAS[a.dataset.a]); return; }
+  const h = e.target.closest('.hs'); if (!h || moved > 6) return;
+  if (h.dataset.to === 'choose') openChoose(); else go(h.dataset.to, h);
+});
+$('bLift').onclick = () => go('lift');
+$('tabs').addEventListener('click', e => { const b = e.target.closest('button'); if (b) go(AREAS[b.dataset.a]); });
+$('thumbs').addEventListener('click', e => { const b = e.target.closest('button'); if (b) go(b.dataset.s); });
+document.querySelector('.langs').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return; lang = b.dataset.l; try { localStorage.setItem('forum-lang', lang); } catch (x) {}
+  texts(); if ($('choose')) openChoose();
+});
+window.addEventListener('resize', () => { if (live) layout(live); });
+window.addEventListener('keydown', e => { if (e.key === 'Escape') closeChoose(); });
+
+function texts() {
+  const t = L10N[lang], sc = SCENES[cur];
+  document.documentElement.lang = lang === 'zh' ? 'zh-Hans' : lang;
+  $('tTitle').textContent = t.title; $('tSub').textContent = t.sub; $('tHint').textContent = t.hint; $('tNote').textContent = t.note; $('tBack').textContent = t.backHome; $('tBook').textContent = t.book;
+  $('wArea').textContent = t[sc.area]; $('wView').textContent = t['v_' + sc.v];
+  $('bLift').textContent = t.lift; $('bLift').hidden = sc.area === 'hotel';
+  $('tabs').innerHTML = Object.keys(AREAS).map(k => '<button type="button" data-a="' + k + '"' + (k === sc.area ? ' class="on"' : '') + '>' + t[k] + '</button>').join('');
+  $('thumbs').innerHTML = Object.keys(SCENES).filter(k => SCENES[k].area === sc.area).map(k =>
+    '<button type="button" data-s="' + k + '"' + (k === cur ? ' class="on"' : '') + '><img src="images/' + SCENES[k].img + '" alt="" loading="lazy"><span>' + t['v_' + SCENES[k].v] + '</span></button>').join('');
+  if (live) live.querySelectorAll('.hs').forEach(h => h.querySelector('span').textContent = t[h.dataset.k]);
+  document.querySelectorAll('.langs button').forEach(b => b.classList.toggle('on', b.dataset.l === lang));
+}
+go('ext');
+</script>
+</body>
+</html>
